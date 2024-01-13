@@ -149,7 +149,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                   // ),
 
                   SizedBox(
-                    height: height * 0.06,
+                    height: height * 0.060,
                   ),
 
                   Container(
@@ -162,7 +162,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                   ),
 
                   SizedBox(
-                    height: height * 0.008,
+                    height: height * 0.002,
                   ),
 
                 ],
