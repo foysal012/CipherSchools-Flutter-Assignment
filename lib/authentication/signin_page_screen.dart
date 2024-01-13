@@ -1,19 +1,18 @@
-import 'package:expense_tracking_application/authentication/signin_page_screen.dart';
+import 'package:expense_tracking_application/authentication/forget_password_page_screen.dart';
 import 'package:expense_tracking_application/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class SignUpPageScreen extends StatefulWidget {
-  const SignUpPageScreen({Key? key}) : super(key: key);
+class SignInPageScreen extends StatefulWidget {
+  const SignInPageScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPageScreen> createState() => _SignUpPageScreenState();
+  State<SignInPageScreen> createState() => _SignInPageScreenState();
 }
 
-class _SignUpPageScreenState extends State<SignUpPageScreen> {
+class _SignInPageScreenState extends State<SignInPageScreen> {
 
-  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -33,12 +32,12 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
         width: double.infinity,
 
         padding: EdgeInsets.only(
-          left: 20,
-          right: 20
+            left: 20,
+            right: 20
         ),
 
         decoration: BoxDecoration(
-          color: Color(0xffFFFFFF)
+            color: Color(0xffFFFFFF)
         ),
         child: Column(
 
@@ -50,33 +49,28 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
 
             Row(
               children: [
-                
+
                 IconButton(
-                    onPressed: (){}, 
+                    onPressed: (){},
                     icon: Icon(Icons.arrow_back, color: Color(0xff212325), size: 32, weight: 32,)
                 ),
 
                 SizedBox(
                   width: width * 0.25,
                 ),
-                
-                Text("Sign Up",
-                style: GoogleFonts.inter(
-                  fontSize: 18,
-                  color: Color(0xff212325),
-                  fontWeight: FontWeight.w600,
-                ),
+
+                Text("Sign In",
+                  style: GoogleFonts.inter(
+                    fontSize: 18,
+                    color: Color(0xff212325),
+                    fontWeight: FontWeight.w600,
+                  ),
                 )
               ],
             ),
 
             SizedBox(
               height: height * 0.05,
-            ),
-
-            WidgetTextField(
-                nameController: nameController,
-            labelText: "Name",
             ),
 
             SizedBox(
@@ -101,32 +95,48 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
               height: height * 0.02,
             ),
 
-            Row(
-              children: [
+            // Row(
+            //   children: [
+            //
+            //     Consumer<AuthProvider>(builder: (context, value, child){
+            //       return Checkbox(
+            //         value: value.checkVaue,
+            //         onChanged: (bool? val){
+            //           value.setCheckValue(val!);
+            //         },
+            //       );
+            //     }
+            //     ),
+            //
+            //     RichText(
+            //       text: TextSpan(
+            //         // text: 'By\n',
+            //         // style: GoogleFonts.cambay(),
+            //         children:  <TextSpan>[
+            //           //TextAlign.center
+            //           TextSpan(text: 'By signing up, you agree to the ',
+            //             style: GoogleFonts.inter(fontSize: 14, color: Color(0xff000000), fontWeight: FontWeight.w500),),
+            //           TextSpan(text: 'Terms of \nService and Privacy Policy', style: GoogleFonts.inter(fontSize: 14, color: Color(0xff7F3DFF), fontWeight: FontWeight.w500),),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
-                Consumer<AuthProvider>(builder: (context, value, child){
-                  return Checkbox(
-                      value: value.checkVaue,
-                      onChanged: (bool? val){
-                        value.setCheckValue(val!);
-                      },
-                  );
-                }
+            InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgetPasswordPageScreen()));
+              },
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text("Forget password?",
+                style: GoogleFonts.cambay(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff7F3DFF),
                 ),
-
-                RichText(
-                  text: TextSpan(
-                    // text: 'By\n',
-                    // style: GoogleFonts.cambay(),
-                    children:  <TextSpan>[
-                      //TextAlign.center
-                      TextSpan(text: 'By signing up, you agree to the ',
-                        style: GoogleFonts.inter(fontSize: 14, color: Color(0xff000000), fontWeight: FontWeight.w500),),
-                      TextSpan(text: 'Terms of \nService and Privacy Policy', style: GoogleFonts.inter(fontSize: 14, color: Color(0xff7F3DFF), fontWeight: FontWeight.w500),),
-                    ],
-                  ),
                 ),
-              ],
+              ),
             ),
 
             SizedBox(
@@ -148,7 +158,7 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Center(
-                  child: Text("Sign Up",
+                  child: Text("Sign In",
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.w600,
                       fontSize: 18,
@@ -198,7 +208,7 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
                       width: width * 0.02,
                     ),
 
-                    Text("Sign Up with Google",
+                    Text("Sign In with Google",
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
@@ -220,12 +230,8 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
             //     // style: GoogleFonts.cambay(),
             //     children:  <TextSpan>[
             //       //TextAlign.center
-            //       TextSpan(text: 'Already have an account? ', style: GoogleFonts.cambay(
-            //           fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff91919F)),),
-            //
-            //       TextSpan(text: 'Login', style: GoogleFonts.cambay(
-            //           fontSize: 16,fontWeight: FontWeight.w500, color: Color(0xff7F3DFF),
-            //           decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.dashed, decorationColor: Color(0xff7F3DFF)),),
+            //       TextSpan(text: "Don't  have an account? ", style: GoogleFonts.cambay(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff91919F)),),
+            //       TextSpan(text: 'Register', style: GoogleFonts.cambay(fontSize: 16,fontWeight: FontWeight.w500, color: Color(0xff7F3DFF), decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.dashed, decorationColor: Color(0xff7F3DFF)),),
             //
             //     ],
             //   ),
@@ -234,26 +240,26 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text("Already have an account? ",
-                style: GoogleFonts.cambay(
-                    fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff91919F)),
-              ),
+                Text("Don't  have an account? ",
+                  style: GoogleFonts.cambay(
+                      fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff91919F)),
+                ),
 
                 InkWell(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInPageScreen()));
                   },
-                  child: Text("Login",
-                  style: GoogleFonts.cambay(
-                      fontSize: 16,fontWeight: FontWeight.w500, color: Color(0xff7F3DFF),
-                      decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.dashed, decorationColor: Color(0xff7F3DFF)),
+                  child: Text("Register",
+                    style: GoogleFonts.cambay(
+                        fontSize: 16,fontWeight: FontWeight.w500, color: Color(0xff7F3DFF),
+                        decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.dashed, decorationColor: Color(0xff7F3DFF)),
                   ),
                 )
               ],
             ),
 
             SizedBox(
-              height: height * 0.21,
+              height: height * 0.32,
             ),
 
             Container(
@@ -292,23 +298,23 @@ class WidgetTextField extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          width: 1,
-          color: Color(0xffF1F1FA)
+            width: 1,
+            color: Color(0xffF1F1FA)
         ),
         color: Color(0xffFFFFFF),
       ),
 
       child: TextFormField(
-        controller: nameController,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          labelText: "${labelText}",
-          labelStyle: GoogleFonts.inter(
-            color: Color(0xff91919F),
-            fontSize: 16,
-              fontWeight: FontWeight.w400
-          ),
-        )
+          controller: nameController,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            labelText: "${labelText}",
+            labelStyle: GoogleFonts.inter(
+                color: Color(0xff91919F),
+                fontSize: 16,
+                fontWeight: FontWeight.w400
+            ),
+          )
       ),
 
     );
@@ -331,42 +337,42 @@ class WidgetTextField1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
-      width: 343,
-      padding: EdgeInsets.fromLTRB(8, 16, 8, 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          width: 1,
-          color: Color(0xffF1F1FA)
+        height: 56,
+        width: 343,
+        padding: EdgeInsets.fromLTRB(8, 16, 8, 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+              width: 1,
+              color: Color(0xffF1F1FA)
+          ),
+          color: Color(0xffFFFFFF),
         ),
-        color: Color(0xffFFFFFF),
-      ),
 
-      child: Consumer<AuthProvider>(builder: (context, value, child){
-        return TextFormField(
-            controller: nameController,
-            obscureText: value.isVisible,
-            obscuringCharacter: "#",
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                labelText: "${labelText}",
-                labelStyle: GoogleFonts.inter(
-                    color: Color(0xff91919F),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400
-                ),
-                suffixIcon: IconButton(
-                  onPressed: (){
-                    value.setIsVisible();
-                  },
-                  icon: Icon( value.isVisible == true ? Icons.visibility_off : Icons.visibility),
-                )
-            )
-        );
+        child: Consumer<AuthProvider>(builder: (context, value, child){
+          return TextFormField(
+              controller: nameController,
+              obscureText: value.isVisible,
+              obscuringCharacter: "#",
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  labelText: "${labelText}",
+                  labelStyle: GoogleFonts.inter(
+                      color: Color(0xff91919F),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: (){
+                      value.setIsVisible();
+                    },
+                    icon: Icon( value.isVisible == true ? Icons.visibility_off : Icons.visibility),
+                  )
+              )
+          );
 
-      }
-      )
+        }
+        )
 
     );
   }
