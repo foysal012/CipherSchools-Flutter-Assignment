@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:expense_tracking_application/authentication/auth_gate.dart';
 import 'package:expense_tracking_application/authentication/signup_page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -94,7 +95,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
 
                       InkWell(
                         onTap: (){
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SignUpPageScreen()), (route) => false);
+                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => AuthGate()), (route) => false);
                         },
                         child: Container(
                           height: 90,

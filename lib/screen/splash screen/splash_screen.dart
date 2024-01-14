@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:expense_tracking_application/screen/getting%20started%20screen/getting_started_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -132,6 +133,18 @@ class _SplashScreenState extends State<SplashScreen> {
       )
     );
   }
+}
+
+void showToast(String msg){
+  Fluttertoast.showToast(
+      msg: "$msg",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0
+  );
 }
 
 String titleName(String txt){

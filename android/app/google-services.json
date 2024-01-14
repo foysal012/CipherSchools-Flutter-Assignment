@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "252027237314",
+    "firebase_url": "https://messaging-e80e1-default-rtdb.firebaseio.com",
+    "project_id": "messaging-e80e1",
+    "storage_bucket": "messaging-e80e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252027237314:android:fa8aa9bbd00918f1351c5b",
+        "android_client_info": {
+          "package_name": "com.example.expense_tracking_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCipueaw_iNHC7XyMGgCXdmQeLtfcP9D4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,10 +1,14 @@
-import 'package:expense_tracking_application/provider/auth_provider.dart';
+import 'package:expense_tracking_application/firebase_options.dart';
+import 'package:expense_tracking_application/provider/auth_provider_class.dart';
+import 'package:expense_tracking_application/screen/bottom%20%20nav%20bar/bottom_nav_bar_page_screen.dart';
+import 'package:expense_tracking_application/screen/profile_page_screen.dart';
 import 'package:expense_tracking_application/screen/splash%20screen/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -12,6 +16,10 @@ void main() {
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent
     )
+  );
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(const MyApp());
@@ -27,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
 
-          ChangeNotifierProvider(create: (context) => AuthProvider()),
+          ChangeNotifierProvider(create: (context) => AuthProviderClass()),
 
 
         ],
@@ -39,6 +47,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
+      //home: const BottomNavigationBarPageScreen(),
     ),
     );
   }
