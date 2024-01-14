@@ -1,5 +1,6 @@
 import 'package:expense_tracking_application/firebase_options.dart';
 import 'package:expense_tracking_application/provider/auth_provider_class.dart';
+import 'package:expense_tracking_application/provider/auth_services_provider_google.dart';
 import 'package:expense_tracking_application/screen/bottom%20%20nav%20bar/bottom_nav_bar_page_screen.dart';
 import 'package:expense_tracking_application/screen/profile_page_screen.dart';
 import 'package:expense_tracking_application/screen/splash%20screen/splash_screen.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         providers: [
 
           ChangeNotifierProvider(create: (context) => AuthProviderClass()),
-
+          ChangeNotifierProvider(create: (context) => AuthServicesProviderGoogle()),
 
         ],
     child: MaterialApp(

@@ -1,10 +1,14 @@
 import 'package:expense_tracking_application/authentication/signin_page_screen.dart';
 import 'package:expense_tracking_application/provider/auth_provider_class.dart';
+import 'package:expense_tracking_application/provider/auth_services_provider_google.dart';
+import 'package:expense_tracking_application/screen/bottom%20%20nav%20bar/bottom_nav_bar_page_screen.dart';
 import 'package:expense_tracking_application/screen/home_page_screen.dart';
 import 'package:expense_tracking_application/screen/splash%20screen/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpPageScreen extends StatefulWidget {
   const SignUpPageScreen({Key? key}) : super(key: key);
@@ -24,16 +28,19 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
    try{
      var authProvider = Provider.of<AuthProviderClass>(context, listen:  false);
 
+     FirebaseAuth auth = FirebaseAuth.instance;
+
       authProvider.setIsLoadingFunction(true);
 
      authProvider.signUpWithEmailAndPassword(
        emailController.text,
        passwordController.text,
        nameController.text,
-     ).then((value) {
+     ).then((value) async{
        authProvider.setIsLoadingFunction(false);
+
        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("SignUp Successfully...")));
-       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomePageScreen()), (route) => false);
+       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BottomNavigationBarPageScreen()), (route) => false);
      }).onError((error, stackTrace) {
        authProvider.setIsLoadingFunction(false);
        showToast(error.toString());
@@ -43,6 +50,17 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
       showToast(e.toString());
    }
 
+  }
+
+  void signInWithGoogle(){
+    try{
+      final authServicesProviderGoogle = Provider.of<AuthServicesProviderGoogle>(context, listen:  false);
+
+      authServicesProviderGoogle.signInWithGoogle(context);
+
+    } catch(e){
+      showToast(e.toString());
+    }
   }
 
   @override
@@ -209,7 +227,7 @@ class _SignUpPageScreenState extends State<SignUpPageScreen> {
 
               InkWell(
                 onTap: (){
-
+                  signInWithGoogle();
                 },
                 child: Container(
                   height: 56,

@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracking_application/authentication/forget_password_page_screen.dart';
 import 'package:expense_tracking_application/authentication/signup_page_screen.dart';
 import 'package:expense_tracking_application/provider/auth_provider_class.dart';
+import 'package:expense_tracking_application/provider/auth_services_provider_google.dart';
 import 'package:expense_tracking_application/screen/bottom%20%20nav%20bar/bottom_nav_bar_page_screen.dart';
-import 'package:expense_tracking_application/screen/home_page_screen.dart';
 import 'package:expense_tracking_application/screen/splash%20screen/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInPageScreen extends StatefulWidget {
   const SignInPageScreen({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _SignInPageScreenState extends State<SignInPageScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   
-  void signIn(){
+  void signIn() {
     try{
       final authProvider = Provider.of<AuthProviderClass>(context, listen:  false);
       authProvider.setIsLoadingFunction(true);
@@ -33,14 +34,26 @@ class _SignInPageScreenState extends State<SignInPageScreen> {
       authProvider.signInWithEmailAndPassword(
           emailController.text, 
           passwordController.text,
-      ).then((value) {
+      ).then((value) async{
         authProvider.setIsLoadingFunction(false);
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("SignIn Successfully...")));
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BottomNavigationBarPageScreen()), (route) => false);
       }).onError((error, stackTrace) {
         authProvider.setIsLoadingFunction(false);
         showToast(error.toString());
       });
+
+    } catch(e){
+      showToast(e.toString());
+    }
+  }
+
+  void signInWithGoogle(){
+    try{
+      final authServicesProviderGoogle = Provider.of<AuthServicesProviderGoogle>(context, listen:  false);
+
+      authServicesProviderGoogle.signInWithGoogle(context);
 
     } catch(e){
       showToast(e.toString());
@@ -55,6 +68,7 @@ class _SignInPageScreenState extends State<SignInPageScreen> {
     var width = MediaQuery.of(context).size.width;
 
     final authProvider = Provider.of<AuthProviderClass>(context, listen:  false);
+    final authServicesProviderGoogle = Provider.of<AuthServicesProviderGoogle>(context, listen:  false);
 
     return Scaffold(
 
@@ -221,40 +235,43 @@ class _SignInPageScreenState extends State<SignInPageScreen> {
                 height: height * 0.01,
               ),
 
-              InkWell(
-                onTap: (){
+              Consumer<AuthServicesProviderGoogle>(builder: (context, value, child){
+                return InkWell(
+                  onTap: (){
+                      //value.signInWithGoogle();
+                    signInWithGoogle();
+                  },
+                  child: Container(
+                    height: 56,
+                    width: 343,
 
-                },
-                child: Container(
-                  height: 56,
-                  width: 343,
+                    padding: EdgeInsets.all(8),
 
-                  padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Color(0xffF1F1FA),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset("images/google.png"),
 
-                  decoration: BoxDecoration(
-                    color: Color(0xffF1F1FA),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset("images/google.png"),
-
-                      SizedBox(
-                        width: width * 0.02,
-                      ),
-
-                      Text("Sign In with Google",
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Color(0xff212325),
+                        SizedBox(
+                          width: width * 0.02,
                         ),
-                      ),
-                    ],
+
+                        Text("Sign In with Google",
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            color: Color(0xff212325),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              }),
 
               SizedBox(
                 height: height * 0.02,

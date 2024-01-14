@@ -1,9 +1,13 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracking_application/authentication/signin_page_screen.dart';
 import 'package:expense_tracking_application/provider/auth_provider_class.dart';
 import 'package:expense_tracking_application/screen/splash%20screen/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePageScreen extends StatefulWidget {
   const ProfilePageScreen({Key? key}) : super(key: key);
@@ -15,16 +19,17 @@ class ProfilePageScreen extends StatefulWidget {
 class _ProfilePageScreenState extends State<ProfilePageScreen> {
 
 
-  void signOut(){
+  void signOut(BuildContext context){
 
     try{
       final authGate = Provider.of<AuthProviderClass>(context, listen: false);
 
       authGate.setIsLoadingFunction(true);
 
-      authGate.signOut().then((value) {
+      authGate.signOut().then((value) async{
 
         authGate.setIsLoadingFunction(false);
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("SignOut Successfully...")));
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SignInPageScreen()), (route) => false);
 
@@ -39,10 +44,14 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
     }
 
   }
-
+  
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  
   @override
   Widget build(BuildContext context) {
-
+    
+    
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
@@ -63,139 +72,158 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
           color: Colors.grey[200],
         ),
         child: Column(
-          children: [
+          children: [  
+            SizedBox(
+            height: height * 0.1,
+          ),
+            
+            Expanded(
+                flex: 2,
+                child: _buildUserInfo()),
+
+            // SizedBox(
+            //   height: height * 0.05,
+            // ),
+
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //
+            //     Container(
+            //       height: 80,
+            //       width: 80,
+            //       decoration: BoxDecoration(
+            //         shape: BoxShape.circle,
+            //         color: Colors.pink,
+            //       ),
+            //     ),
+            //
+            //     Column(
+            //       children: [
+            //
+            //         Text("Username",
+            //           style: GoogleFonts.inter(
+            //             fontWeight: FontWeight.w500,
+            //             fontSize: 14,
+            //             color: Color(0xff91919F),
+            //           ),
+            //         ),
+            //
+            //         Text("Khushi Sharma",
+            //           style: GoogleFonts.inter(
+            //             fontWeight: FontWeight.w600,
+            //             fontSize: 24,
+            //             color: Color(0xff161719),
+            //           ),
+            //         ),
+            //
+            //
+            //       ],
+            //     ),
+            //
+            //     IconButton(
+            //         onPressed: (){},
+            //         icon: Icon(Icons.edit_sharp, size: 32, color: Color(0xff212325),)
+            //     )
+            //
+            //   ],
+            // ),
+            //
+            // SizedBox(
+            //   height: height * 0.1,
+            // ),
 
             SizedBox(
-              height: height * 0.05,
+              height: 0.005,
             ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-
-                Container(
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.pink,
-                  ),
+            Expanded(
+              flex: 5,
+              child: Container(
+                height: 362,
+                width: 356,
+                // padding: EdgeInsets.only(
+                //   left: 20,
+                //   right: 20
+                // ),
+                decoration: BoxDecoration(
+                  color: Color(0xffFFFFFF),
+                  borderRadius: BorderRadius.circular(24),
                 ),
-
-                Column(
+                child: Column(
                   children: [
-
-                    Text("Username",
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: Color(0xff91919F),
+              
+                    WidgetProfileIconButton(
+                      width: width,
+                      onTap: (){},
+                      icon: Icons.account_balance_wallet,
+                      txt: "Account",
+                      iClr: Color(0xff7F3DFF),
+                      cClr: Color(0xffEEE5FF),
+                    ),
+              
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
                       ),
                     ),
-
-                    Text("Khushi Sharma",
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 24,
-                        color: Color(0xff161719),
+              
+                    WidgetProfileIconButton(
+                      width: width,
+                      onTap: (){},
+                      icon: Icons.settings,
+                      txt: "Settings",
+                      iClr: Color(0xff7F3DFF),
+                      cClr: Color(0xffEEE5FF),
+                    ),
+              
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
                       ),
                     ),
-
-
+              
+                    WidgetProfileIconButton(
+                      width: width,
+                      onTap: (){},
+                      icon: Icons.upload,
+                      txt: "Export Data",
+                      iClr: Color(0xff7F3DFF),
+                      cClr: Color(0xffEEE5FF),
+                    ),
+              
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                      ),
+                    ),
+              
+                    WidgetProfileIconButton(
+                      width: width,
+                      onTap: (){
+                        signOut( context);
+                      },
+                      icon: Icons.logout,
+                      txt: "Logout",
+                      iClr: Color(0xffFD3C4A),
+                      cClr: Color(0xffFFE2E4),
+                    )
+              
                   ],
                 ),
-
-                IconButton(
-                    onPressed: (){},
-                    icon: Icon(Icons.edit_sharp, size: 32, color: Color(0xff212325),)
-                )
-
-              ],
-            ),
-
-            SizedBox(
-              height: height * 0.1,
-            ),
-
-            Container(
-              height: 362,
-              width: 356,
-              // padding: EdgeInsets.only(
-              //   left: 20,
-              //   right: 20
-              // ),
-              decoration: BoxDecoration(
-                color: Color(0xffFFFFFF),
-                borderRadius: BorderRadius.circular(24),
               ),
-              child: Column(
-                children: [
-
-                  WidgetProfileIconButton(
-                    width: width,
-                    onTap: (){},
-                    icon: Icons.account_balance_wallet,
-                    txt: "Account",
-                    iClr: Color(0xff7F3DFF),
-                    cClr: Color(0xffEEE5FF),
-                  ),
-
-                  Container(
-                    height: 1,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                  ),
-
-                  WidgetProfileIconButton(
-                    width: width,
-                    onTap: (){},
-                    icon: Icons.settings,
-                    txt: "Settings",
-                    iClr: Color(0xff7F3DFF),
-                    cClr: Color(0xffEEE5FF),
-                  ),
-
-                  Container(
-                    height: 1,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                  ),
-
-                  WidgetProfileIconButton(
-                    width: width,
-                    onTap: (){},
-                    icon: Icons.upload,
-                    txt: "Export Data",
-                    iClr: Color(0xff7F3DFF),
-                    cClr: Color(0xffEEE5FF),
-                  ),
-
-                  Container(
-                    height: 1,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                  ),
-
-                  WidgetProfileIconButton(
-                    width: width,
-                    onTap: (){
-                      signOut();
-                    },
-                    icon: Icons.logout,
-                    txt: "Logout",
-                    iClr: Color(0xffFD3C4A),
-                    cClr: Color(0xffFFE2E4),
-                  )
-
-                ],
-              ),
-            )
+            ),
+            
+            Expanded(
+                flex: 2,
+                child: Container(
+                ))
           ],
         ),
       ),
@@ -259,5 +287,81 @@ class WidgetProfileIconButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Widget _buildUserInfo(){
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  
+  return StreamBuilder(
+      stream: firestore.collection("user_list").snapshots(), 
+      builder: (context, snapshot){
+        if(snapshot.data == null){
+          return Text("No data found");
+        } else if(snapshot.hasError){
+          return Text("Something went wrong");
+        } else if(snapshot.connectionState == ConnectionState.waiting){
+          return Column(children: [
+            CircularProgressIndicator(),
+            Text("Loading..."),
+          ],);
+        } else{
+          return ListView(
+            children: snapshot.data!.docs.map((e) => _buildUserInfoDetails(e)).toList(),
+          );
+        }
+      }
+  );
+}
+
+Widget _buildUserInfoDetails(DocumentSnapshot documentSnapshot){
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+
+  if(auth.currentUser!.email == data["email"]){
+    return ListTile(
+      leading: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          //borderRadius: BorderRadius.circular(40),
+          shape: BoxShape.circle,
+          border: Border.all(
+            width: 1,
+            color: Color(0xffAD00FF)
+          ),
+          //image:
+        ),
+      ),
+
+      title: Text("Username",
+        style: GoogleFonts.inter(
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+          color: Color(0xff91919F),
+        ),
+      ),
+
+      subtitle: Text("${data["name"]}",
+        style: GoogleFonts.inter(
+          fontWeight: FontWeight.w600,
+          fontSize: 24,
+          color: Color(0xff161719),
+        ),
+      ),
+
+      trailing: IconButton(
+          onPressed: (){},
+          icon: Icon(Icons.edit_sharp, size: 32, color: Color(0xff212325),)
+      ),
+    );
+
+  } else{
+    return Container();
   }
 }
