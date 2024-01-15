@@ -2,11 +2,15 @@ import 'package:expense_tracking_application/firebase_options.dart';
 import 'package:expense_tracking_application/provider/auth_provider_class.dart';
 import 'package:expense_tracking_application/provider/auth_services_provider_google.dart';
 import 'package:expense_tracking_application/screen/bottom%20%20nav%20bar/bottom_nav_bar_page_screen.dart';
+import 'package:expense_tracking_application/screen/expense_page_screen.dart';
+import 'package:expense_tracking_application/screen/income_page_screen.dart';
 import 'package:expense_tracking_application/screen/profile_page_screen.dart';
 import 'package:expense_tracking_application/screen/splash%20screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
 void main() async{
@@ -18,6 +22,9 @@ void main() async{
       statusBarColor: Colors.transparent
     )
   );
+
+ await Hive.initFlutter();
+
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -47,8 +54,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
-      //home: const BottomNavigationBarPageScreen(),
+      //home: const SplashScreen(),
+      home: IncomePageScreen()
     ),
     );
   }
