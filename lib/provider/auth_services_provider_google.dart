@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracking_application/screen/bottom%20%20nav%20bar/bottom_nav_bar_page_screen.dart';
 import 'package:expense_tracking_application/screen/splash%20screen/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthServicesProviderGoogle with ChangeNotifier{
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   //Google Sign In
    signInWithGoogle(BuildContext context) async{
@@ -33,13 +35,22 @@ class AuthServicesProviderGoogle with ChangeNotifier{
 
         //data save on sharepreference for user login or logout
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        if(credential.token != null){
-          sharedPreferences.setString("token", "${credential.token}");
+        if(credential.accessToken != null){
+          sharedPreferences.setString("token", "${credential.accessToken}");
           print("now token is : ${sharedPreferences.getString("token")}");
           notifyListeners();
         } else{
 
         }
+
+        // add user info in the firestore database
+        firestore.collection("user_list").doc(auth.currentUser!.uid).set({
+          "name" : auth.currentUser!.displayName,
+          "email" : auth.currentUser!.email,
+          "uid" : auth.currentUser!.uid,
+          "image" : auth.currentUser!.photoURL,
+        });
+
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BottomNavigationBarPageScreen()), (route) => false);
 
       });
@@ -55,3 +66,4 @@ class AuthServicesProviderGoogle with ChangeNotifier{
 
 
 }
+

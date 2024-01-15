@@ -72,70 +72,14 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
           color: Colors.grey[200],
         ),
         child: Column(
-          children: [  
+          children: [
             SizedBox(
-            height: height * 0.1,
+            height: height * 0.05,
           ),
-            
+
             Expanded(
                 flex: 2,
                 child: _buildUserInfo()),
-
-            // SizedBox(
-            //   height: height * 0.05,
-            // ),
-
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //
-            //     Container(
-            //       height: 80,
-            //       width: 80,
-            //       decoration: BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         color: Colors.pink,
-            //       ),
-            //     ),
-            //
-            //     Column(
-            //       children: [
-            //
-            //         Text("Username",
-            //           style: GoogleFonts.inter(
-            //             fontWeight: FontWeight.w500,
-            //             fontSize: 14,
-            //             color: Color(0xff91919F),
-            //           ),
-            //         ),
-            //
-            //         Text("Khushi Sharma",
-            //           style: GoogleFonts.inter(
-            //             fontWeight: FontWeight.w600,
-            //             fontSize: 24,
-            //             color: Color(0xff161719),
-            //           ),
-            //         ),
-            //
-            //
-            //       ],
-            //     ),
-            //
-            //     IconButton(
-            //         onPressed: (){},
-            //         icon: Icon(Icons.edit_sharp, size: 32, color: Color(0xff212325),)
-            //     )
-            //
-            //   ],
-            // ),
-            //
-            // SizedBox(
-            //   height: height * 0.1,
-            // ),
-
-            SizedBox(
-              height: 0.005,
-            ),
 
             Expanded(
               flex: 5,
@@ -152,7 +96,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                 ),
                 child: Column(
                   children: [
-              
+
                     WidgetProfileIconButton(
                       width: width,
                       onTap: (){},
@@ -161,7 +105,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                       iClr: Color(0xff7F3DFF),
                       cClr: Color(0xffEEE5FF),
                     ),
-              
+
                     Container(
                       height: 1,
                       width: double.infinity,
@@ -169,7 +113,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                         color: Colors.grey,
                       ),
                     ),
-              
+
                     WidgetProfileIconButton(
                       width: width,
                       onTap: (){},
@@ -178,7 +122,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                       iClr: Color(0xff7F3DFF),
                       cClr: Color(0xffEEE5FF),
                     ),
-              
+
                     Container(
                       height: 1,
                       width: double.infinity,
@@ -186,7 +130,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                         color: Colors.grey,
                       ),
                     ),
-              
+
                     WidgetProfileIconButton(
                       width: width,
                       onTap: (){},
@@ -195,7 +139,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                       iClr: Color(0xff7F3DFF),
                       cClr: Color(0xffEEE5FF),
                     ),
-              
+
                     Container(
                       height: 1,
                       width: double.infinity,
@@ -203,7 +147,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                         color: Colors.grey,
                       ),
                     ),
-              
+
                     WidgetProfileIconButton(
                       width: width,
                       onTap: (){
@@ -214,12 +158,12 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                       iClr: Color(0xffFD3C4A),
                       cClr: Color(0xffFFE2E4),
                     )
-              
+
                   ],
                 ),
               ),
             ),
-            
+
             Expanded(
                 flex: 2,
                 child: Container(
@@ -298,16 +242,19 @@ Widget _buildUserInfo(){
   return StreamBuilder(
       stream: firestore.collection("user_list").snapshots(), 
       builder: (context, snapshot){
+
         if(snapshot.data == null){
           return Text("No data found");
-        } else if(snapshot.hasError){
+        }
+        else if(snapshot.hasError){
           return Text("Something went wrong");
         } else if(snapshot.connectionState == ConnectionState.waiting){
           return Column(children: [
             CircularProgressIndicator(),
             Text("Loading..."),
           ],);
-        } else{
+        }
+        else{
           return ListView(
             children: snapshot.data!.docs.map((e) => _buildUserInfoDetails(e)).toList(),
           );
@@ -335,7 +282,7 @@ Widget _buildUserInfoDetails(DocumentSnapshot documentSnapshot){
             width: 1,
             color: Color(0xffAD00FF)
           ),
-          //image:
+          image: DecorationImage(image: NetworkImage(data["image"])),
         ),
       ),
 
@@ -365,3 +312,4 @@ Widget _buildUserInfoDetails(DocumentSnapshot documentSnapshot){
     return Container();
   }
 }
+
