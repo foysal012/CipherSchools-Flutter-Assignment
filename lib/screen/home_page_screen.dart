@@ -79,7 +79,148 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 fontWeight: FontWeight.w500,
                 color: Color(0xff91919F)
               ),
+            ),
+
+            SizedBox(
+              height: height * 0.01,
+            ),
+            
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("₹",
+                style: GoogleFonts.inter(
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff161719)
+                ),
+                ),
+                Text("38000",
+                  style: GoogleFonts.inter(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff161719)
+                  ),
+                )
+              ],
+            ),
+
+            SizedBox(
+              height: height * 0.02,
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
+                Container(
+                  height: 80,
+                  width: 170,
+                  decoration: BoxDecoration(
+                    color: Color(0xff00A86B),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xffFCFCFC)
+                        ),
+                        child: Image.asset("images/income.png"),
+                      ),
+
+                      SizedBox(
+                        width: width * 0.025,
+                      ),
+
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Income",
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xffFCFCFC),
+                            fontSize: 14,
+                          ),
+                          ),
+
+                          Text("₹50000",
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xffFCFCFC),
+                              fontSize: 22,
+                            ),
+                          ),
+
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+
+                SizedBox(
+                  width: width * 0.03,
+                ),
+
+                Container(
+                  height: 80,
+                  width: 170,
+                  decoration: BoxDecoration(
+                    color: Color(0xffFD3C4A),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Color(0xffFCFCFC)
+                        ),
+                        child: Image.asset("images/expense.png"),
+                      ),
+
+                      SizedBox(
+                        width: width * 0.025,
+                      ),
+
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Expenses",
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xffFCFCFC),
+                              fontSize: 14,
+                            ),
+                          ),
+
+                          Text("₹12000",
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xffFCFCFC),
+                              fontSize: 22,
+                            ),
+                          ),
+
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
             )
+
+
+            
           ],
         ),
       ),
