@@ -1,4 +1,5 @@
 import 'package:expense_tracking_application/firebase_options.dart';
+import 'package:expense_tracking_application/model/model_class.dart';
 import 'package:expense_tracking_application/provider/auth_provider_class.dart';
 import 'package:expense_tracking_application/provider/auth_services_provider_google.dart';
 import 'package:expense_tracking_application/screen/bottom%20%20nav%20bar/bottom_nav_bar_page_screen.dart';
@@ -24,7 +25,8 @@ void main() async{
   );
 
  await Hive.initFlutter();
-
+ Hive.registerAdapter(ModelClassAdapter());
+ var box = await Hive.openBox("wallet");
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

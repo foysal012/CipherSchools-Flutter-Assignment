@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:expense_tracking_application/provider/auth_provider_class.dart';
 import 'package:expense_tracking_application/screen/budget_page_screen.dart';
+import 'package:expense_tracking_application/screen/expense_page_screen.dart';
 import 'package:expense_tracking_application/screen/home_page_screen.dart';
+import 'package:expense_tracking_application/screen/income_page_screen.dart';
 import 'package:expense_tracking_application/screen/profile_page_screen.dart';
 import 'package:expense_tracking_application/screen/transection_page_screen.dart';
 import 'package:floating_bottom_bar/animated_bottom_navigation_bar.dart';
@@ -155,25 +157,31 @@ class _BottomNavigationBarPageScreenState extends State<BottomNavigationBarPageS
             centerIconChild: [
               FloatingCenterButtonChild(
                 child: const Icon(
-                  Icons.home,
+                  Icons.download,
                   color: AppColors.white,
                 ),
-                //onTap: () => log('Item1'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => IncomePageScreen()));
+                },
               ),
               FloatingCenterButtonChild(
                 child: const Icon(
-                  Icons.access_alarm,
+                  Icons.upload,
                   color: AppColors.white,
                 ),
-                // onTap: () => log('Item2'),
+                 onTap: () {
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpensePageScreen()));
+                 },
               ),
-              FloatingCenterButtonChild(
-                child: const Icon(
-                  Icons.ac_unit_outlined,
-                  color: AppColors.white,
-                ),
-                //onTap: () => log('Item3'),
-              ),
+              // FloatingCenterButtonChild(
+              //   child: const Icon(
+              //     Icons.close,
+              //     color: AppColors.white,
+              //   ),
+              //   // onTap: () {
+              //   //   Navigator.of(context).pop();
+              //   // },
+              // ),
             ],
           ),
         );
